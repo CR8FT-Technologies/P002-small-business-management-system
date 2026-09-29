@@ -1,0 +1,23 @@
+# Environment / secrets
+.env
+
+# Database exports/backups (local only, never committed)
+*.sql
+*.sql.gz
+/backups/
+/exports/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies (if introduced later)
+/vendor/
+/node_modules/
+
+# Logs
+*.log
