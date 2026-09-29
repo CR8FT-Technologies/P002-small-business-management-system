@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-session_start();
-
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../includes/auth.php';
 
-if (isset($_SESSION['user_id'])) {
+if (is_logged_in()) {
     header('Location: /dashboard/index.php');
     exit;
 }
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     if ($username === '' || $password === '') {
-        $error = 'Please enter both username and password.';
+        $error = 'Please enter your username and password.';
     } else {
         $stmt = $pdo->prepare(
             'SELECT id, name, username, password_hash, role
@@ -53,45 +52,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>P002 - Login</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
 
-    <h1>P002 Small Business Management System</h1>
-    <h2>Login</h2>
+<body class="login-page">
 
-    <?php if ($error !== ''): ?>
-        <p><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
-    <?php endif; ?>
+<div class="login-container">
 
-    <form method="post">
-        <div>
-            <label for="username">Username</label><br>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                required
-                autocomplete="username"
-            >
+    <div class="login-card">
+
+        <div class="login-brand">
+            <h1>P002</h1>
+            <p>Small Business Management System</p>
         </div>
 
-        <br>
-
-        <div>
-            <label for="password">Password</label><br>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                autocomplete="current-password"
-            >
+        <div class="login-heading">
+            <h2>Welcome Back</h2>
+            <p>Sign in to continue to your dashboard.</p>
         </div>
 
-        <br>
+        <?php if ($error !== ''): ?>
+            <div class="login-error">
+                <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+        <?php endif; ?>
 
-        <button type="submit">Login</button>
-    </form>
+        <form method="post" class="login-form">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autocomplete="username"
+                    autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary login-button">
+                Login
+            </button>
+
+        </form>
+
+        <div class="login-footer">
+            CR8FT Technologies
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
