@@ -188,3 +188,10 @@ th {
         gap: 10px;
     }
 }
+
+.sidebar nav a.active {
+    background: #374151;
+    font-weight: 700;
+    border-left: 4px solid #ffffff;
+    padding-left: 16px;
+}

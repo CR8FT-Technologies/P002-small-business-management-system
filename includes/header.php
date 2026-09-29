@@ -7,6 +7,16 @@ require_once __DIR__ . '/auth.php';
 require_login();
 
 $page_title = $page_title ?? 'P002';
+
+$current_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+
+function nav_active(string $path): string
+{
+    global $current_path;
+
+    return $current_path === $path ? ' active' : '';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,18 +31,66 @@ $page_title = $page_title ?? 'P002';
 <div class="app-layout">
 
     <aside class="sidebar">
+
         <h2>P002 Business System</h2>
 
         <nav>
-            <a href="/dashboard/index.php">Dashboard</a>
-            <a href="/products/index.php">Products</a>
-            <a href="/customers/index.php">Customers</a>
-            <a href="/sales/index.php">Sales</a>
-            <a href="/invoices/index.php">Invoices</a>
-            <a href="/reports/index.php">Reports</a>
-            <a href="/backup/index.php">Backup</a>
-            <a href="/auth/logout.php">Logout</a>
+
+            <a
+                class="<?= nav_active('/dashboard/index.php') ?>"
+                href="/dashboard/index.php"
+            >
+                Dashboard
+            </a>
+
+            <a
+                class="<?= nav_active('/products/index.php') ?>"
+                href="/products/index.php"
+            >
+                Products
+            </a>
+
+            <a
+                class="<?= nav_active('/customers/index.php') ?>"
+                href="/customers/index.php"
+            >
+                Customers
+            </a>
+
+            <a
+                class="<?= nav_active('/sales/index.php') ?>"
+                href="/sales/index.php"
+            >
+                Sales
+            </a>
+
+            <a
+                class="<?= nav_active('/invoices/index.php') ?>"
+                href="/invoices/index.php"
+            >
+                Invoices
+            </a>
+
+            <a
+                class="<?= nav_active('/reports/index.php') ?>"
+                href="/reports/index.php"
+            >
+                Reports
+            </a>
+
+            <a
+                class="<?= nav_active('/backup/index.php') ?>"
+                href="/backup/index.php"
+            >
+                Backup
+            </a>
+
+            <a href="/auth/logout.php">
+                Logout
+            </a>
+
         </nav>
+
     </aside>
 
     <main class="main-content">
